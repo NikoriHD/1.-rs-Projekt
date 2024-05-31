@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data over IoT Løsning</title>
+    <style>
+        textarea {
+            width: 100%;
+            height: 200px;
+        }
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/temperature">Temperature</a>
+        <a href="/humidity">Humidity</a>
+        <a href="/analog_data">Analog Data</a>
+    </div>    
+
+    <h1>Data over IoT Løsning</h1>
+    <hr>
+    {% if result %}
+        {% if result is iterable %}
+            <h2>Result:</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>
+            <form method="GET">
+                <input type="hidden" name="sort_by" value="ID">
+                <button type="submit" name="sort_order" value="ASC" {% if sort_by == 'ID' and sort_order == 'ASC' %}style="background-color: lightgreen"{% endif %}>ID ASC</button>
+                <button type="submit" name="sort_order" value="DESC" {% if sort_by == 'ID' and sort_order == 'DESC' %}style="background-color: lightgreen"{% endif %}>ID DESC</button>
+            </form>
+        </th>
+        <th>
+            <form method="GET">
+                <input type="hidden" name="sort_by" value="Timestamp">
+                <button type="submit" name="sort_order" value="ASC" {% if sort_by == 'Timestamp' and sort_order == 'ASC' %}style="background-color: lightgreen"{% endif %}>Timestamp ASC</button>
+                <button type="submit" name="sort_order" value="DESC" {% if sort_by == 'Timestamp' and sort_order == 'DESC' %}style="background-color: lightgreen"{% endif %}>Timestamp DESC</button>
+            </form>
+        </th>
+        <th>
+            <form method="GET">
+                <input type="hidden" name="sort_by" value="Sensor_ID">
+                <button type="submit" name="sort_order" value="ASC" {% if sort_by == 'Sensor_ID' and sort_order == 'ASC' %}style="background-color: lightgreen"{% endif %}>Sensor ID ASC</button>
+                <button type="submit" name="sort_order" value="DESC" {% if sort_by == 'Sensor_ID' and sort_order == 'DESC' %}style="background-color: lightgreen"{% endif %}>Sensor ID DESC</button>
+            </form>
+        </th>
+                        <th>
+                            <form method="GET">
+                                <input type="hidden" name="sort_by" value="Temperature">
+                                <button type="submit" name="sort_order" value="ASC" {% if sort_by == 'Temperature' and sort_order == 'ASC' %}style="background-color: lightgreen"{% endif %}>Temperature ASC</button>
+                                <button type="submit" name="sort_order" value="DESC" {% if sort_by == 'Temperature' and sort_order == 'DESC' %}style="background-color: lightgreen"{% endif %}>Temperature DESC</button>
+                            </form>
+                        </th>
+                        <th>
+                            <form method="GET">
+                                <input type="hidden" name="sort_by" value="Humidity">
+                                <button type="submit" name="sort_order" value="ASC" {% if sort_by == 'Humidity' and sort_order == 'ASC' %}style="background-color: lightgreen"{% endif %}>Humidity ASC</button>
+                                <button type="submit" name="sort_order" value="DESC" {% if sort_by == 'Humidity' and sort_order == 'DESC' %}style="background-color: lightgreen"{% endif %}>Humidity DESC</button>
+                            </form>
+                        </th>
+                        <th>
+                            <form method="GET">
+                                <input type="hidden" name="sort_by" value="Analog_Value">
+                                <button type="submit" name="sort_order" value="ASC" {% if sort_by == 'Analog_Value' and sort_order == 'ASC' %}style="background-color: lightgreen"{% endif %}>Analog Value ASC</button>
+                                <button type="submit" name="sort_order" value="DESC" {% if sort_by == 'Analog_Value' and sort_order == 'DESC' %}style="background-color: lightgreen"{% endif %}>Analog Value DESC</button>
+                            </form>
+                        </th>
+                        <th>
+                            <form method="GET">
+                                <input type="hidden" name="sort_by" value="Digital_Value">
+                                <button type="submit" name="sort_order" value="ASC" {% if sort_by == 'Digital_Value' and sort_order == 'ASC' %}style="background-color: lightgreen"{% endif %}>Digital Value ASC</button>
+                                <button type="submit" name="sort_order" value="DESC" {% if sort_by == 'Digital_Value' and sort_order == 'DESC' %}style="background-color: lightgreen"{% endif %}>Digital Value DESC</button>
+                            </form>
+                        </th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in result %}
+                        <tr>
+                            {% for col in row %}
+                                <td>{{ col }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>{{ result }}</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>

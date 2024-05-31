@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Data</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        textarea {
+            width: 100%;
+            height: 200px;
+        }
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/temperature">Temperature</a>
+        <a href="/humidity">Humidity</a>
+        <a href="/analog_data">Analog Data</a>
+    </div>
+    <canvas id="temperatureChart" width="800" height="400"></canvas>
+
+    <script>
+        
+        function fetchTemperatureData() {
+            
+            fetch('/fetch_temperature_data')
+                .then(response => response.json())
+                .then(data => {
+                    
+                    const filteredData = data.filter(entry => entry !== null);
+
+                    
+                    const xCoordinates = [];
+                    const yCoordinates = [];
+
+                    
+                    filteredData.forEach((temperature, index) => {
+                        xCoordinates.push(index);
+                        yCoordinates.push(temperature);
+                    });
+
+                   
+                    const ctx = document.getElementById('temperatureChart').getContext('2d');
+                    const chart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: xCoordinates,
+                            datasets: [{
+                                label: 'Temperature Data',
+                                data: yCoordinates,
+                                fill: false,
+                                backgroundColor: 'rgba(255, 99, 132, 0.5)', 
+                                borderColor: 'black', 
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                x: {
+                                    type: 'linear',
+                                    position: 'bottom',
+                                    title: {
+                                        display: true,
+                                        text: 'Index' 
+                                    },
+                                    min: 0 
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Temperature (°C)' 
+                                    },
+                                    min: 0 
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching temperature data:', error));
+        }
+
+        
+        document.addEventListener('DOMContentLoaded', fetchTemperatureData);
+    </script>
+</body>
+</html>
