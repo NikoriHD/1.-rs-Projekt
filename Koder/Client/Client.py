@@ -82,7 +82,7 @@ def receive_data_and_store(client_socket, db_filename):
         sys.exit(1)
 
 if __name__ == "__main__":
-    server_ip = '192.168.0.142'  # Replace with the IP address of the ESP32
+    server_ip = 'xxx.xxx.xxx'  # Replace with the IP address of the ESP32
     server_port = 1235
 
     desktop_path = os.path.join(os.path.expanduser('~'), 'Desktop')
