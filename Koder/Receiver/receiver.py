@@ -16,8 +16,8 @@ def connect_to_wifi(ssid, password):
     print('Wi-Fi connected!')
     print('IP address:', wlan.ifconfig()[0])
 
-wifi_ssid = "TP-Link_F70A"
-wifi_password = "Team1329"
+wifi_ssid = "INDSÆT WIFI NAVN"
+wifi_password = "INDSÆT KODE"
 connect_to_wifi(wifi_ssid, wifi_password)
 
 esp_now = espnow.ESPNow()
